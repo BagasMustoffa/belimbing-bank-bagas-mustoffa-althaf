@@ -3,6 +3,7 @@ package main
 import (
 	"full-stack-engineer-intern-test-case-bagas-mustoffa-althaf/backend/controller"
 	"full-stack-engineer-intern-test-case-bagas-mustoffa-althaf/backend/model"
+	"os"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -56,5 +57,9 @@ func main() {
 		transactionRoutes.POST("/withdraw", controller.Withdraw)
 	}
 
-	r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	r.Run(":" + port)
 }
