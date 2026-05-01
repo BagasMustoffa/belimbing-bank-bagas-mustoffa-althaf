@@ -8,6 +8,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetDepositoTypes(c *gin.Context) {
+	var depositos []model.DepositoType
+
+	if err := model.DB.Find(&depositos).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": depositos})
+}
+
 func CreateDepositoType(c *gin.Context) {
 	var input model.DepositoType
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -19,15 +30,9 @@ func CreateDepositoType(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": input})
 }
 
-func GetDepositoTypes(c *gin.Context) {
-	var depositos []model.DepositoType
-	model.DB.Find(&depositos)
-	c.JSON(http.StatusOK, gin.H{"data": depositos})
-}
-
 func UpdateDepositoType(c *gin.Context) {
 	var deposito model.DepositoType
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&deposito).Error; err != nil {
+	if err := model.DB.Where("id = ?", c.Param("idDeposito")).First(&deposito).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Deposito Type tidak ditemukan!"})
 		return
 	}
@@ -44,7 +49,7 @@ func UpdateDepositoType(c *gin.Context) {
 
 func DeleteDepositoType(c *gin.Context) {
 	var deposito model.DepositoType
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&deposito).Error; err != nil {
+	if err := model.DB.Where("id = ?", c.Param("idDeposito")).First(&deposito).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Deposito Type tidak ditemukan!"})
 		return
 	}

@@ -27,14 +27,19 @@ func CreateAccount(c *gin.Context) {
 
 func GetAccounts(c *gin.Context) {
 	var accounts []model.Account
-	model.DB.Preload("Customer").Preload("DepositoType").Find(&accounts)
+	idCustomer := c.Param("idCustomer")
+
+	if err := model.DB.Preload("Customer").Preload("DepositoType").Where("customer_id = ?", idCustomer).Find(&accounts).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.JSON(http.StatusOK, gin.H{"data": accounts})
 }
 
 func UpdateAccount(c *gin.Context) {
 	var account model.Account
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&account).Error; err != nil {
+	if err := model.DB.Preload("Customer").Preload("DepositoType").Where("id = ?", c.Param("idAccount")).First(&account).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Account tidak ditemukan!"})
 		return
 	}
@@ -51,7 +56,7 @@ func UpdateAccount(c *gin.Context) {
 
 func DeleteAccount(c *gin.Context) {
 	var account model.Account
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&account).Error; err != nil {
+	if err := model.DB.Where("id = ?", c.Param("idAccount")).First(&account).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Account tidak ditemukan!"})
 		return
 	}

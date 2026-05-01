@@ -33,11 +33,22 @@ func Login(c *gin.Context) {
 
 func GetCustomer(c *gin.Context) {
 	var customer model.Customer
-	if err := model.DB.Preload("Accounts.DepositoType").Where("id = ?", c.Param("id")).First(&customer).Error; err != nil {
+	if err := model.DB.Preload("Accounts.DepositoType").Where("id = ?", c.Param("idCustomer")).First(&customer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Tidak ditemukan"})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"data": customer})
+}
+
+func GetAllCustomers(c *gin.Context) {
+	var customers []model.Customer
+
+	if err := model.DB.Preload("Accounts.DepositoType").Find(&customers).Error; err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"data": customers})
 }
 
 type RegisterInput struct {
@@ -81,7 +92,7 @@ func CreateCustomer(c *gin.Context) {
 
 func UpdateCustomer(c *gin.Context) {
 	var customer model.Customer
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&customer).Error; err != nil {
+	if err := model.DB.Where("id = ?", c.Param("idCustomer")).First(&customer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Customer tidak ditemukan!"})
 		return
 	}
@@ -98,7 +109,7 @@ func UpdateCustomer(c *gin.Context) {
 
 func DeleteCustomer(c *gin.Context) {
 	var customer model.Customer
-	if err := model.DB.Where("id = ?", c.Param("id")).First(&customer).Error; err != nil {
+	if err := model.DB.Where("id = ?", c.Param("idCustomer")).First(&customer).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Customer tidak ditemukan!"})
 		return
 	}
