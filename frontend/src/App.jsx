@@ -382,7 +382,7 @@ export default function App() {
       <h1 style={{ color: bgGreen, marginBottom: '30px' }}>Dashboard SuperAdmin</h1>
       
       <div style={{ width: '800px', backgroundColor: 'white', padding: '30px', borderRadius: '15px', border: `1px solid ${borderCol}`, marginBottom: '30px' }}>
-        <h3 style={{ textAlign: 'center', color: bgGreen, marginTop: 0 }}>Daftar Deposito (Master Data)</h3>
+        <h3 style={{ textAlign: 'center', color: bgGreen, marginTop: 0 }}>Daftar Deposito</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
           <thead>
             <tr style={{ backgroundColor: bgGreen, color: 'white' }}>
