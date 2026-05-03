@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+axios.defaults.headers.common['ngrok-skip-browser-warning'] = 'true';
 
 const API_URL = 'https://shrewdly-maximize-showgirl.ngrok-free.dev/api';
 
