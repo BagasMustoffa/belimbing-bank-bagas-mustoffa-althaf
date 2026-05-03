@@ -336,6 +336,8 @@ export default function App() {
         ← Kembali Pilih Akun
       </button>
 
+      <h1 style={{ color: bgGreen, marginBottom: '30px' }}>Dashboard Customer & Akun</h1>
+
       <div style={{ width: '700px', backgroundColor: 'white', padding: '30px', borderRadius: '15px', border: `1px solid ${borderCol}`, marginBottom: '30px' }}>
         <h3 style={{ textAlign: 'center', color: bgGreen, marginTop: 0 }}>Informasi Akun & Saldo</h3>
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'center' }}>
